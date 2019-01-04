@@ -29,16 +29,25 @@
             $table3="Eleves";
             $table4="Repartition";
         }if($db="Clients"){
-            
+            $ajout1=$dbh->exec("CREATE TABLE `Client` (`AdresseMail` varchar(13) NOT NULL,`MotDePasse` varchar(4) DEFAULT NULL,`Nom` varchar(7) DEFAULT NULL,`Prenom` varchar(7) DEFAULT NULL,`Adresse` varchar(10) DEFAULT NULL) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
+            $ajout2=$dbh->exec("CREATE TABLE `Commandes` (`NumeroCommande` int(1) NOT NULL,`DateCommande` varchar(10) DEFAULT NULL,`ModePaiement` varchar(6) DEFAULT NULL,`DateExpedition` varchar(10) DEFAULT NULL,`AdresseMail` varchar(13) DEFAULT NULL) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
+            $ajout3=$dbh->exec("CREATE TABLE `Detail`( `NumeroCommande` int(1) NOT NULL,`Reference` int(1) NOT NULL,`Quantite` int(2) DEFAULT NULL) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
+            $ajout4=$dbh->exec("CREATE TABLE `Produit` (`Reference` int(1) NOT NULL,`Nom` varchar(16) DEFAULT NULL,`Categorie` varchar(7) DEFAULT NULL,`Marque` varchar(7) DEFAULT NULL,`PrixUnitaire` decimal(3,2) DEFAULT NULL) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
             $table1="Client";
             $table2="Commande";
             $table3="Detail";
             $table4="Produit";
         }if($db="Livres"){
+            $ajout1=$dbh->exec("CREATE TABLE `Auteur` (`id_auteur` INT(1) NOT NULL,`nom_auteur` varchar(20) DEFAULT NULL,`pre_nom_auteur` varchar(20) DEFAULT NULL,`Naissance` DATE DEFAULT NULL,`Mort` DATE DEFAULT NULL,`Nationalite` VARCHAR(20)) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
+            $ajout2=$dbh->exec("CREATE TABLE `Ecrit_par` (`id_auteur` INT(1) NOT NULL,`id_livre` INT(1)) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
+            $ajout3=$dbh->exec("CREATE TABLE `Edite_par` (`id_editeur` INT(1) NOT NULL,`id_livre` INT(1)) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
+            $ajout4=$dbh->exec("CREATE TABLE `Editeur` (`id_editeur` INT(1) NOT NULL,`nom_editeur` VARCHAR(30),`site_web` VARCHAR(40))) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
+            $ajout5=$dbh->exec("CREATE TABLE `Livre` (`id_livre` INT(1) NOT NULL,`nom_livre` VARCHAR(30),`genre` VARCHAR(40),`parution` YEAR,`nature` VARCHAR(20),`langue` VARCHAR(20)) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
             $table1="Auteur";
             $table2="Ecrit_par";
             $table3="Edite_par";
-            $table4="Livre";
+            $table5="Livre";
+            $table4="Editeur";
         }
     }?>
 
@@ -57,7 +66,7 @@
         <br/> <!-- Pourquoi ne fait pas un retour à la ligne ? -->
         <input type="submit" name="valider" value="OK"/>
         </select>
-        <p> Ajout de ligne dans les tables à partir des fichiers csv
+        <p> Ajout de tables à partir des fichiers csv
         </p>
         <?php
        echo '<select name="choix2">
@@ -65,6 +74,7 @@
         <option value="'.$table2.'">'.$table2.'</option>
         <option value="'.$table3.'">'.$table3.'</option>
         <option value="'.$table4.'">'.$table4.'</option>
+        <option value="'.$table5.'">'.$table5.'</option>
         <input type="submit" name="valider2" value="OK"/>
         </select>';
         ?>

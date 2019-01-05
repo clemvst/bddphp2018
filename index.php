@@ -15,12 +15,27 @@
             <option value="Clients">Clients</option>
             <input type="submit" name="valider" value="OK"/>
             </select>
-    <p> Bouton permettant de se diriger sur divers pages cf questions suivantes
-    </p>
-    <p> Bouton qui efface toutes la table de données ainsi que toute trace d exectution sur la machine
-    </p>
-    </form>
-        <?php
+            <p> Bouton permettant de se diriger sur divers pages cf questions suivantes
+            </p>
+            <p> Bouton qui efface toutes la table de données ainsi que toute trace d exectution sur la machine
+            </p>
+            </form>
+            <?php
+            if((isset($_POST['valider2']))){ //On crée le bouton pour trouver la table CSV à ajouter
+                echo "Trouve le fichier $_POST[choix2]";
+                ?>
+                <form method = "post" action="index.php" enctype="multipart/form-data">
+                <label for="mon_fichier">Fichier (tous formats | max. 1 Mo) :</label><br />
+                <input type="hidden" name="MAX_FILE_SIZE" value="1048576" />
+                <input type="file" name="mon_fichier" id="mon_fichier" /> <br/>
+                <input type="submit" name="valider3" value="OK"/>
+                </form>
+                <?php
+                }
+            if(isset($_POST['valider3'])){ // le fichier a été trouvé dans le finder
+                $path=$_FILES['mon_fichier']['tmp_name'];
+                echo "j ai $path"; //je crois que normalement c'est le path 
+                }
             }else{ //l'option a été validé ...
             $db = $_POST['choix']; /**la récupération données non protégé*/
             //echo "la base est $db";

@@ -23,7 +23,7 @@
         <?php
             }else{ //l'option a été validé ...
             $db = $_POST['choix']; /**la récupération données non protégé*/
-            echo "la base est $db";
+            //echo "la base est $db";
             $host="localhost";
             $root="root";
             $root_password="rootpass";
@@ -35,7 +35,7 @@
                 $dbh = new PDO("mysql:host=localhost",'root','root');
                 $dbh->exec("CREATE DATABASE IF NOT EXISTS `$db`; CREATE USER '$user'@'localhost' IDENTIFIED BY '$pass'; GRANT ALL ON `$db`.* TO '$user'@'localhost';FLUSH PRIVILEGES;")
                 or die(print_r($dbh->errorInfo(), true));
-                echo "La base de données est crée !!!";
+                //echo "La base de données est crée !!!";
             }
             catch (PDOException $e) {
                 die("DB ERROR: ". $e->getMessage());
@@ -46,7 +46,7 @@
                 $ajout2=$dbh->exec("CREATE TABLE `Eleves`.`Classes` ( `ClasID` INT(1) NOT NULL , `Enseignant` VARCHAR(100) NOT NULL)ENGINE = InnoDB ;");
                 $ajout3=$dbh->exec("CREATE TABLE `Eleves`.`Eleves` ( `ElevID` INT(2) NOT NULL , `Nom` VARCHAR(100) NOT NULL , `Age` INT(2) NOT NULL , `Ville` VARCHAR(100) NOT NULL  ) ENGINE = InnoDB;" );
                 //table Repartition je ne la comprends pas ...
-                echo "je suis dans la boucle eleve";
+                //echo "je suis dans la boucle eleve";
                 $table1="Activites";
                 $table2="Classes";
                 $table3="Eleves";
@@ -63,7 +63,7 @@
                 $table3="Detail";
                 $table4="Produit";
                 $table5="";
-                echo "je suis dans la table Clients";
+                //echo "je suis dans la table Clients";
             }elseif($db=="Livres"){
                 $ajout1=$dbh->exec("CREATE TABLE `Auteur` (`id_auteur` INT(1) NOT NULL,`nom_auteur` varchar(20) DEFAULT NULL,`pre_nom_auteur` varchar(20) DEFAULT NULL,`Naissance` DATE DEFAULT NULL,`Mort` DATE DEFAULT NULL,`Nationalite` VARCHAR(20)) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
                 $ajout2=$dbh->exec("CREATE TABLE `Ecrit_par` (`id_auteur` INT(1) NOT NULL,`id_livre` INT(1)) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
@@ -75,9 +75,10 @@
                 $table3="Edite_par";
                 $table5="Livre";
                 $table4="Editeur";
-                echo "je suis dans la table Clients";
+                //echo "je suis dans la table Clients";
             }
-            echo "$table1" ?>
+            //echo "$table1"
+            ?>
             </head>
             <form method ="post" action="index.php">
             <p> Creation de la table de votre choix
@@ -91,6 +92,7 @@
             <p> Ajout de tables à partir des fichiers csv
             </p>
             <?php
+            echo "Choisir la table à ajouter à la base $db";
             echo '<select name="choix2">
             <option value="'.$table1.'">'.$table1.'</option>
             <option value="'.$table2.'">'.$table2.'</option>

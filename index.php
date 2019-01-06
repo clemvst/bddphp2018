@@ -7,7 +7,7 @@
             </head>
             <!-- Notre formulaire :-->
             <form method ="post" action="index.php">
-            <p> Creation de la table de votre choix
+            <p> Creation de la Base de données de votre choix
             </p>
             <select name="choix">
             <option value="Livres">Livres</option>
@@ -15,14 +15,16 @@
             <option value="Clients">Clients</option>
             <input type="submit" name="valider" value="OK"/>
             </select>
-            <p> Bouton permettant de se diriger sur divers pages cf questions suivantes
-            </p>
-            <p> Bouton qui efface toutes la table de données ainsi que toute trace d exectution sur la machine
-            </p>
+	    <p>
+		<input type="button" value= "bouton permettant de se diriger sur plusieurs pages"/>
+	    </p>
+	    <p>    	
+		<input type="button" value= "Tout effacer et revenir au menu principal"/>
+           </p>
             </form>
             <?php
             if((isset($_POST['valider2']))){ //On crée le bouton pour trouver la table CSV à ajouter
-                echo "Trouve le fichier $_POST[choix2]";
+                echo "Sélectionne le fichier $_POST[choix2]";
                 ?>
                 <form method = "post" action="index.php" enctype="multipart/form-data">
                 <label for="mon_fichier">Fichier (tous formats | max. 1 Mo) :</label><br />
@@ -44,7 +46,8 @@
             $root_password="rootpass";
             $user='newuser';
             $pass='newpass';
-            //$db="TP_BDD";
+	    //$db="TP_BDD";
+	    
             try
             {
                 $dbh = new PDO("mysql:host=localhost",'root','root');
@@ -96,7 +99,7 @@
             ?>
             </head>
             <form method ="post" action="index.php">
-            <p> Creation de la table de votre choix
+            <p> Creation de la Base de données de votre choix
             </p>
             <select name="choix">
             <option value="Livres">Livres</option>
@@ -119,8 +122,11 @@
             ?>
             <p> Bouton permettant de se diriger sur divers pages cf questions suivantes
             </p>
-            <p> Bouton qui efface toutes la table de données ainsi que toute trace d exectution sur la machine
-            </p>
+            <p> Bouton qui efface toutes la base de données ainsi que toute trace d'execution sur la machine
+	    </p>
+	    <p>    	
+		<input type="button" value= "Tout effacer et revenir au menu principal"/>
+           </p>
             </form>
             <?php
             }

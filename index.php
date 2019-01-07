@@ -3,7 +3,7 @@
         if(!(isset($_POST['valider']))){ //on vérifie que l'option n'a pas encore été
             ?>
             <head>
-            Mon DM de BDD
+            Menu
             </head>
             <!-- Notre formulaire :-->
             <form method ="post" action="index.php">

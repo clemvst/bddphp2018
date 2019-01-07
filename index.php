@@ -19,8 +19,22 @@
 	    	<input type="button" value= "bouton permettant de se diriger sur plusieurs pages"/>
 	  	</p>
 		<input type="button" value= "Tout effacer et revenir au menu principal" onClick="document.location.href = document.referrer">
-            </form>
-            <?php
+	    </form>
+            </head>	
+
+
+	<?php 
+	}elseif(isset($_POST['valider'])){
+
+ 	$db = $_POST['choix']; /**la récupération données non protégé*/
+            // echo "la base est $db";
+            $host="localhost";
+            $root="root";
+            $root_password="rootpass";
+            $user='newuser';
+            $pass='newpass';
+	    //$db="TP_BDD";
+	               
             if((isset($_POST['valider2']))){ //On crée le bouton pour trouver la table CSV à ajouter
                 echo "Sélectionne le fichier $_POST[choix2]";
                 ?>
@@ -32,40 +46,10 @@
                 </form>
                 <?php
                 }
-            if(isset($_POST['valider3'])){ // le fichier a été trouvé dans le finder
-		$path=$_FILES['mon_fichier']['tmp_name'];
-		if($_FILES["mon_fichier"]["size"] > 0)
-		 {
-		  	$file = fopen($path, "r");
-	       		while (($getData = fgetcsv($file, 10000, ",")) !== FALSE)
-	         	{
- 
-	           	$sql = "INSERT into Client (AdresseMail,MotDePasse,Nom,Prenom,Adresse) 
-                   		values ('".$getData[0]."','".$getData[1]."','".$getData[2]."','".$getData[3]."','".$getData[4]."')";
-                   		$result = query($sql);
-			if(!isset($result))
-			{
-				echo "ici";		
-			}
-			else {
-				echo "la";
-			}
-	         }
-			
-	         fclose($file);	
-		 } 
 
-                echo "j ai $path"; //je crois que normalement c'est le path 
-                }
-            }else{ //l'option a été validé ...
-            $db = $_POST['choix']; /**la récupération données non protégé*/
-            // echo "la base est $db";
-            $host="localhost";
-            $root="root";
-            $root_password="rootpass";
-            $user='newuser';
-            $pass='newpass';
-	    //$db="TP_BDD";
+	 //l'option a été validé ...
+		//echo "$table1"
+
 
 	    try
             {
@@ -80,8 +64,8 @@
             }
             catch (PDOException $e) {
                 die("DB ERROR: ". $e->getMessage());
-            }
-            //En fonction de la table choisi on veut créer des tables dedans
+	    }
+	    //En fonction de la table choisi on veut créer des tables dedans
             if($db=="Eleves"){
                 $ajout1=$dbh->exec("CREATE TABLE IF NOT EXISTS `Eleves`.`Act` ( `ActID` INT(1) NOT NULL , `Lieu` VARCHAR(100) NOT NULL , `Bus` INT(1) NOT NULL , `Theme` VARCHAR(100) NOT NULL , `Jour` INT(1) NOT NULL ) ENGINE = InnoDB; ");
                 $ajout2=$dbh->exec("CREATE TABLE IF NOT EXISTS `Eleves`.`Classes` ( `ClasID` INT(1) NOT NULL , `Enseignant` VARCHAR(100) NOT NULL)ENGINE = InnoDB ;");
@@ -124,7 +108,7 @@
 		}
 		//echo "fin du while";
                 //echo "je suis dans la table Clients";
-            }elseif($db=="Livres"){
+             }elseif($db=="Livres"){
                 $ajout1=$dbh->exec("CREATE TABLE IF NOT EXISTS `Livres`.`Auteur` (`id_auteur` INT(1) NOT NULL,`nom_auteur` varchar(20) DEFAULT NULL,`pre_nom_auteur` varchar(20) DEFAULT NULL,`Naissance` DATE DEFAULT NULL,`Mort` DATE DEFAULT NULL,`Nationalite` VARCHAR(20)) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
                 $ajout2=$dbh->exec("CREATE TABLE IF NOT EXISTS `Livres`.`Ecrit_par` (`id_auteur` INT(1) NOT NULL,`id_livre` INT(1)) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
                 $ajout3=$dbh->exec("CREATE TABLE IF NOT EXISTS `Livres`.`Edite_par` (`id_editeur` INT(1) NOT NULL,`id_livre` INT(1)) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
@@ -137,9 +121,8 @@
                 $table4="Editeur";
                 //echo "je suis dans la table Livres";
             }
-            //echo "$table1"
-            ?>
-            </head>
+
+?>
             <form method ="post" action="index.php">
             <p> Creation de la Base de données de votre choix
             </p>
@@ -168,9 +151,37 @@
 	    <p>    	
 		<input type="button" value= "Tout effacer et revenir au menu principal" onClick="document.location.href = document.referrer">
 	   </p>
-		
+
 	    </form>
-            <?php
-            }
+<?php
+	   
+	    if(isset($_POST['valider3'])){ // le fichier a été trouvé dans le finder
+		$path=$_FILES['mon_fichier']['tmp_name'];
+		if($_FILES["mon_fichier"]["size"] > 0)
+		 {
+		  	$file = fopen($path, "r");
+	       		while (($getData = fgetcsv($file, 10000, ",")) !== FALSE)
+			{
+				echo "je suis la ";
+	           	//	$sql = "INSERT into Client (AdresseMail,MotDePasse,Nom,Prenom,Adresse) 
+                   	//		values ('".$getData[0]."','".$getData[1]."','".$getData[2]."','".$getData[3]."','".$getData[4]."')";
+                   	//	$result = $sql->query("SELECT * FROM Client");
+		//	if(!isset($result))
+		//	{
+		//		echo "ici";		
+		//	}
+		//	else {
+		//		echo "la";
+		//	}
+	         }
+			
+	         fclose($file);	
+		 } 
+
+                echo "j ai $path"; //je crois que normalement c'est le path 
+                }
+
+           
+}
             ?>
 </html>

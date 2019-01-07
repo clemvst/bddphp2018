@@ -14,13 +14,11 @@
             <option value="Eleves">Eleves</option>
             <option value="Clients">Clients</option>
             <input type="submit" name="valider" value="OK"/>
-            </select>
-	    <p>
-		<input type="button" value= "bouton permettant de se diriger sur plusieurs pages"/>
-	    </p>
-	    <p>    	
-		<input type="button" value= "Tout effacer et revenir au menu principal"/>
-           </p>
+	    </select>
+		<p>
+	    	<input type="button" value= "bouton permettant de se diriger sur plusieurs pages"/>
+	  	</p>
+		<input type="button" value= "Tout effacer et revenir au menu principal" onClick="document.location.href = document.referrer">
             </form>
             <?php
             if((isset($_POST['valider2']))){ //On crée le bouton pour trouver la table CSV à ajouter
@@ -125,9 +123,10 @@
             <p> Bouton qui efface toutes la base de données ainsi que toute trace d'execution sur la machine
 	    </p>
 	    <p>    	
-		<input type="button" value= "Tout effacer et revenir au menu principal"/>
-           </p>
-            </form>
+		<input type="button" value= "Tout effacer et revenir au menu principal" onClick="document.location.href = document.referrer">
+	   </p>
+		
+	    </form>
             <?php
             }
             ?>

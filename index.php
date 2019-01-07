@@ -33,7 +33,28 @@
                 <?php
                 }
             if(isset($_POST['valider3'])){ // le fichier a été trouvé dans le finder
-                $path=$_FILES['mon_fichier']['tmp_name'];
+		$path=$_FILES['mon_fichier']['tmp_name'];
+		if($_FILES["mon_fichier"]["size"] > 0)
+		 {
+		  	$file = fopen($path, "r");
+	       		while (($getData = fgetcsv($file, 10000, ",")) !== FALSE)
+	         	{
+ 
+	           	$sql = "INSERT into Client (AdresseMail,MotDePasse,Nom,Prenom,Adresse) 
+                   		values ('".$getData[0]."','".$getData[1]."','".$getData[2]."','".$getData[3]."','".$getData[4]."')";
+                   		$result = query($sql);
+			if(!isset($result))
+			{
+				echo "ici";		
+			}
+			else {
+				echo "la";
+			}
+	         }
+			
+	         fclose($file);	
+		 } 
+
                 echo "j ai $path"; //je crois que normalement c'est le path 
                 }
             }else{ //l'option a été validé ...
@@ -83,6 +104,11 @@
 		$table3="Detail";
 		$table4="Produit";
 		$table5="";
+		
+	
+
+
+
 		$results = $dbh->prepare("SELECT * FROM Client;"); 
 		$results->execute();
 		$r = $results->fetchAll(); 

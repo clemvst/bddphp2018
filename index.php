@@ -132,19 +132,9 @@
             <option value="'.$table5.'">'.$table5.'</option>
             <input type="submit" name="valider2" value="OK"/>
             </select>';
-?>
 
-	    <p>
-	         <input type="button" value= "bouton permettant de se diriger sur plusieurs pages"/>
-	    </p>
-	    <p>    	
-		<input type="button" value= "Tout effacer et revenir au menu principal" onClick="document.location.href = document.referrer">
-	   </p>
-
-	    </form>
-<?php
 	    	               
-            if((isset($_POST['valider2']))){ //On crée le bouton pour trouver la table CSV à ajouter
+	     if(isset($_POST['valider2'])){ //On crée le bouton pour trouver la table CSV à ajouter
                 echo "Sélectionne le fichier $_POST[choix2]";
                 ?>
                 <form method = "post" action="index.php" enctype="multipart/form-data">
@@ -182,7 +172,17 @@
 
                 echo "j ai $path"; //je crois que normalement c'est le path 
                 }
+?>
 
+	    <p>
+	         <input type="button" value= "bouton permettant de se diriger sur plusieurs pages"/>
+	    </p>
+	    <p>    	
+		<input type="button" value= "Tout effacer et revenir au menu principal" onClick="document.location.href = document.referrer">
+	   </p>
+
+	    </form>
+<?php
            
 }
             ?>

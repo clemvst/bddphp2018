@@ -25,6 +25,10 @@
 
 	<?php 
 	}elseif(isset($_POST['valider'])){
+	//l'option a été validé ...
+	//echo "$table1"
+
+
 
  	$db = $_POST['choix']; /**la récupération données non protégé*/
             // echo "la base est $db";
@@ -34,24 +38,7 @@
             $user='newuser';
             $pass='newpass';
 	    //$db="TP_BDD";
-	               
-            if((isset($_POST['valider2']))){ //On crée le bouton pour trouver la table CSV à ajouter
-                echo "Sélectionne le fichier $_POST[choix2]";
-                ?>
-                <form method = "post" action="index.php" enctype="multipart/form-data">
-                <label for="mon_fichier">Fichier (tous formats | max. 1 Mo) :</label><br />
-                <input type="hidden" name="MAX_FILE_SIZE" value="1048576" />
-                <input type="file" name="mon_fichier" id="mon_fichier" /> <br/>
-                <input type="submit" name="valider3" value="OK"/>
-                </form>
-                <?php
-                }
-
-	 //l'option a été validé ...
-		//echo "$table1"
-
-
-	    try
+	 try
             {
 	        $dbh = new PDO("mysql:host=localhost",'root','root');
 		$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -136,7 +123,8 @@
 	   </p>
              <?php
             echo "Choisir la table à ajouter à la base $db";
-            echo '<select name="choix2">
+	    echo '
+	    <select name="choix2">
             <option value="'.$table1.'">'.$table1.'</option>
             <option value="'.$table2.'">'.$table2.'</option>
             <option value="'.$table3.'">'.$table3.'</option>
@@ -144,7 +132,8 @@
             <option value="'.$table5.'">'.$table5.'</option>
             <input type="submit" name="valider2" value="OK"/>
             </select>';
-            ?>
+?>
+
 	    <p>
 	         <input type="button" value= "bouton permettant de se diriger sur plusieurs pages"/>
 	    </p>
@@ -154,6 +143,19 @@
 
 	    </form>
 <?php
+	    	               
+            if((isset($_POST['valider2']))){ //On crée le bouton pour trouver la table CSV à ajouter
+                echo "Sélectionne le fichier $_POST[choix2]";
+                ?>
+                <form method = "post" action="index.php" enctype="multipart/form-data">
+                <label for="mon_fichier">Fichier (tous formats | max. 1 Mo) :</label><br />
+                <input type="hidden" name="MAX_FILE_SIZE" value="1048576" />
+                <input type="file" name="mon_fichier" id="mon_fichier" /> <br/>
+                <input type="submit" name="valider3" value="OK"/>
+                </form>
+                <?php
+                }
+
 	   
 	    if(isset($_POST['valider3'])){ // le fichier a été trouvé dans le finder
 		$path=$_FILES['mon_fichier']['tmp_name'];

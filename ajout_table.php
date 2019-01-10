@@ -175,8 +175,9 @@ Modification des tables
     
 ?>
 <p>
-<input type="button" value= "bouton permettant de se diriger sur plusieurs pages"/>
+<input type="button" value= "Effectuer des requêtes SQL" onClick="document.location.href='requetes_sql.php'"/>
 </p>
+
 <p>
 <input type="button" value= "Tout effacer et revenir au menu principal" onClick="document.location.href = document.referrer"> //ça ne marche pas chez moi
 </p>

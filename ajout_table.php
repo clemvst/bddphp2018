@@ -67,7 +67,7 @@ Modification des tables
                     //echo "fin du while";
                     //echo "je suis dans la table Clients";
                     }
-                }if($db=="Livres"){
+                }if($db=="Livres"){
                         $ajout1=$dbh->exec("CREATE TABLE IF NOT EXISTS `Livres`.`Auteur` (`id_auteur` INT(1) NOT NULL,`nom_auteur` varchar(20) DEFAULT NULL,`pre_nom_auteur` varchar(20) DEFAULT NULL,`Naissance` DATE DEFAULT NULL,`Mort` DATE DEFAULT NULL,`Nationalite` VARCHAR(20)) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
                         //$ajout12=$dbh->exec("ALTER TABLE `Auteur` ADD PRIMARY KEY(`id_auteur`);");
                         $ajout2=$dbh->exec("CREATE TABLE IF NOT EXISTS `Livres`.`Ecrit_par` (`id_auteur` INT(1) NOT NULL,`id_livre` INT(1)) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
@@ -146,16 +146,19 @@ Modification des tables
         }
         if($_FILES["mon_fichier"]["size"] > 0)
         {   $file = fopen($path, "r");
-            $Name_col=fgetcsv($file, 10000, ";");
+            $Name_col=fgetcsv($file, 10000, ",");
             $num=count($Name_col);
             //echo "$Name_col[0]";
-            while (($getData = fgetcsv($file, 10000, ";")) !== FALSE)
+            while (($getData = fgetcsv($file, 10000, ",")) !== FALSE)
             {
                 //print_r($getData);
                 for($j=0;$j<$num;$j++){
-                    //echo "$chosen_table";
+			//echo "$chosen_table";
+			echo "get data : $getData[$j]";
+			
                     $col=ltrim(rtrim($Name_col[$j],")"),"(");
-                    $sql = "INSERT INTO `$chosen_table` (`$col`) VALUES ( $getData[$j] )";
+			echo "colonne : $col";
+			$sql = "INSERT INTO `$chosen_table` (`colonne`) VALUES (`$getData[$j]` )";
                     echo $sql;
                     $ajout_table=$dbh->exec($sql);
                     //$result = $dbh->query($sql);

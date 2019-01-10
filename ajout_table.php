@@ -127,6 +127,11 @@ Modification des tables
         <input type="hidden" name="db_name" value= <?php echo "$db " ;?> />
         <input type="hidden" name="tab" value=<?php echo "$chosen_table " ;?> />
         </form>
+        <form method="post" action="saisi_main.php" enctype="multipart/form-data">
+        <input type="hidden" name="tab" value=<?php echo "$chosen_table " ;?> />
+        <input type="hidden" name="db_name" value= <?php echo "$db " ;?> />
+        <input type="submit" name="Valider" value="Saisi_Manuel"/>
+        </form>
     <?php
     }
     if(isset($_POST['valider3'])){ // le fichier a été trouvé dans le finder        $path=$_FILES['mon_fichier']['tmp_name'];

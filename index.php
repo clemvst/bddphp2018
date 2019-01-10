@@ -16,7 +16,7 @@
             <input type="submit" name="valider" value="OK"/>
 	    </select>
 		<p>
-	    	<input type="button" value= "bouton permettant de se diriger sur plusieurs pages"/>
+	    	<input type="button" value= "Effectuer des requêtes SQL"/>
 	  	</p>
 		<input type="button" value= "Tout effacer et revenir au menu principal" onClick="document.location.href = document.referrer">
 	    </form>
@@ -40,7 +40,7 @@
         <input type="submit" name="valider" value="OK"/>
         </select>
         <p>
-        <input type="button" value= "bouton permettant de se diriger sur plusieurs pages"/>
+        <input type="button" value= "Effectuer des requêtes SQL"/>
         </p>
         <input type="button" value= "Tout effacer et revenir au menu principal" onClick="document.location.href = document.referrer">
         </form>

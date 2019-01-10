@@ -70,6 +70,7 @@ Modification des tables
                 }if($db=="Livres"){
                         $ajout1=$dbh->exec("CREATE TABLE IF NOT EXISTS `Livres`.`Auteur` (`id_auteur` INT(1) NOT NULL,`nom_auteur` varchar(20) DEFAULT NULL,`pre_nom_auteur` varchar(20) DEFAULT NULL,`Naissance` DATE DEFAULT NULL,`Mort` DATE DEFAULT NULL,`Nationalite` VARCHAR(20)) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
                         //$ajout12=$dbh->exec("ALTER TABLE `Auteur` ADD PRIMARY KEY(`id_auteur`);");
+                    
                         $ajout2=$dbh->exec("CREATE TABLE IF NOT EXISTS `Livres`.`Ecrit_par` (`id_auteur` INT(1) NOT NULL,`id_livre` INT(1)) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
                         $ajout3=$dbh->exec("CREATE TABLE IF NOT EXISTS `Livres`.`Edite_par` (`id_editeur` INT(1) NOT NULL,`id_livre` INT(1)) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
                         $ajout4=$dbh->exec("CREATE TABLE IF NOT EXISTS `Livres`.`Editeur` (`id_editeur` INT(1) NOT NULL,`nom_editeur` VARCHAR(30),`site_web` VARCHAR(40)) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
@@ -146,18 +147,20 @@ Modification des tables
         }
         if($_FILES["mon_fichier"]["size"] > 0)
         {   $file = fopen($path, "r");
-            $Name_col=fgetcsv($file, 10000, ";");
+            $Name_col=fgetcsv($file, 10000, ",");
             $num=count($Name_col);
-            //echo "$Name_col[0]";
-            while (($getData = fgetcsv($file, 10000, ";")) !== FALSE)
+            //echo "Titre $Name_col[1]";
+            //print_r($Name_col);
+            
+            while (($getData = fgetcsv($file, 10000, ",")) !== FALSE)
             {
-                //print_r($getData);
-                for($j=0;$j<$num;$j++){
+                $value="";
+                for($j=0;$j<$num-1;$j++){
                     //echo "$chosen_table";
-                    $col=ltrim(rtrim($Name_col[$j],")"),"(");
-                    $sql = "INSERT INTO `$chosen_table` (`$col`) VALUES ( $getData[$j] )";
-                    echo $sql;
-                    $ajout_table=$dbh->exec($sql);
+                    //$col=ltrim(rtrim($Name_col[$j],")"),"(");
+                    $value.=" "." '$getData[$j]'"." ".",";
+                    //echo "$value";
+                    //$ajout_table=$dbh->exec($sql);
                     //$result = $dbh->query($sql);
                 //	if(!isset($result))
                 //	{
@@ -167,6 +170,11 @@ Modification des tables
                 //		echo "la";
                 //	}
                 }
+                $value.=" "."'$getData[$j]'"." "; //eviter avoir virgule à la fin
+                $sql = "INSERT INTO `$chosen_table`  VALUES ( $value )";
+                echo $sql;
+                $ajout_table=$dbh->exec($sql);
+                //$result = $dbh->query($sql);
             }
                 fclose($file);
         }

@@ -46,11 +46,11 @@ Modification des tables
             }if($db=="Clients"){
                 $ajout1=$dbh->exec("CREATE TABLE IF NOT EXISTS `Clients`.`Client` (`AdresseMail` varchar(13) PRIMARY KEY NOT NULL,`MotDePasse` varchar(8) DEFAULT NULL,`Nom` varchar(7) DEFAULT NULL,`Prenom` varchar(7) DEFAULT NULL,`Adresse` varchar(10) DEFAULT NULL) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
 
-                $ajout2=$dbh->exec("CREATE TABLE IF NOT EXISTS `Clients`.`Commandes` (`NumeroCommande` int(1) PRIMARY KEY NOT NULL,`DateCommande` varchar(10) DEFAULT NULL,`ModePaiement` varchar(6) DEFAULT NULL,`DateExpedition` varchar(10) DEFAULT NULL,`AdresseMail` varchar(13) DEFAULT NULL,FOREIGN KEY (AdresseMail) REFERENCES Client(AdresseMail)) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
+                $ajout2=$dbh->exec("CREATE TABLE IF NOT EXISTS `Clients`.`Commandes` (`NumeroCommande` int(1) PRIMARY KEY NOT NULL,`DateCommande` varchar(10) DEFAULT NULL,`ModePaiement` varchar(6) DEFAULT NULL,`DateExpedition` varchar(10) DEFAULT NULL,`AdresseMail` varchar(13) DEFAULT NULL,FOREIGN KEY (AdresseMail) REFERENCES Client(AdresseMail) ON UPDATE CASCADE ON DELETE CASCADE) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
             
                 $ajout4=$dbh->exec("CREATE TABLE IF NOT EXISTS `Clients`.`Produit` (`Reference` int(1) PRIMARY KEY NOT NULL,`Nom` varchar(16) DEFAULT NULL,`Categorie` varchar(7) DEFAULT NULL,`Marque` varchar(7) DEFAULT NULL,`PrixUnitaire` decimal(3,2) DEFAULT NULL) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
                 
-                $ajout3=$dbh->exec("CREATE TABLE IF NOT EXISTS `Clients`.`Detail`( `NumeroCommande` int(1) NOT NULL,`Reference` int(1)NOT NULL,`Quantite` int(2) DEFAULT NULL, PRIMARY KEY (NumeroCommande,Reference), FOREIGN KEY (Reference) REFERENCES Produit(Reference), FOREIGN KEY (NumeroCommande) REFERENCES Commandes(NumeroCommande)) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
+                $ajout3=$dbh->exec("CREATE TABLE IF NOT EXISTS `Clients`.`Detail`( `NumeroCommande` int(1) NOT NULL,`Reference` int(1)NOT NULL,`Quantite` int(2) DEFAULT NULL, PRIMARY KEY (NumeroCommande,Reference), FOREIGN KEY (Reference) REFERENCES Produit(Reference) ON UPDATE CASCADE ON DELETE CASCADE, FOREIGN KEY (NumeroCommande) REFERENCES Commandes(NumeroCommande) ON UPDATE CASCADE ON DELETE CASCADE) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
 
                 $table1="Client";
                 $table2="Commandes";
@@ -71,7 +71,7 @@ Modification des tables
                     //echo "fin du while";
                     //echo "je suis dans la table Clients";
                     }
-                    }if($db=="Livres"){
+                    }if($db=="Livres"){
                         $ajout1=$dbh->exec("CREATE TABLE IF NOT EXISTS `Livres`.`Auteur` (`id_auteur` INT(1) NOT NULL,`nom_auteur` varchar(20) DEFAULT NULL,`pre_nom_auteur` varchar(20) DEFAULT NULL,`Naissance` DATE DEFAULT NULL,`Mort` DATE DEFAULT NULL,`Nationalite` VARCHAR(20)) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
                         //$ajout12=$dbh->exec("ALTER TABLE `Auteur` ADD PRIMARY KEY(`id_auteur`);");
                     
@@ -98,9 +98,18 @@ Modification des tables
                 <option value="'.$table5.'">'.$table5.'</option>
                 <input type="submit" name="valider2" value="OK"/>
                 </select>';
-                ?>
+?>
+
                 <input type="hidden" name="db_name" value= <?php echo "$db";?> />
-            </form>
+		</form>
+		<form method="post" action="requetes_sql.php" enctype="multipart/form-data">
+               <input type="hidden" name="db_name" value= <?php echo "$db";?> />
+           	<p>
+
+		<input type="submit" value= "Effectuer des requêtes SQL" />
+		</p>
+		</form>
+
         <?php
             }
             if(isset($_POST['valider2'])){ //On crée le bouton pour trouver la table CSV à ajouter
@@ -149,7 +158,10 @@ Modification des tables
         catch (PDOException $e) {
             die("DB ERROR: ". $e->getMessage());
         }
-        if($_FILES["mon_fichier"]["size"] > 0)
+	if($_FILES["mon_fichier"]["size"] > 0)
+?>
+<?php
+
         {   $file = fopen($path, "r");
             $Name_col=fgetcsv($file, 10000, ",");
             $num=count($Name_col);
@@ -179,9 +191,7 @@ Modification des tables
     }
     
 ?>
-<p>
-<input type="button" value= "bouton permettant de se diriger sur plusieurs pages"/>
-</p>
+
 <p>
 <input type="button" value= "Tout effacer et revenir au menu principal" onClick="document.location.href = document.referrer"> //ça ne marche pas chez moi
 </p>

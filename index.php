@@ -15,9 +15,6 @@
             <option value="Clients">Clients</option>
             <input type="submit" name="valider" value="OK"/>
 	    </select>
-		<p>
-	    	<input type="button" value= "bouton permettant de se diriger sur plusieurs pages"/>
-	  	</p>
 		<input type="button" value= "Tout effacer et revenir au menu principal" onClick="document.location.href = document.referrer">
 	    </form>
         </head>
@@ -39,9 +36,6 @@
         <option value="Clients">Clients</option>
         <input type="submit" name="valider" value="OK"/>
         </select>
-        <p>
-        <input type="button" value= "bouton permettant de se diriger sur plusieurs pages"/>
-        </p>
         <input type="button" value= "Tout effacer et revenir au menu principal" onClick="document.location.href = document.referrer">
         </form>
         </head>

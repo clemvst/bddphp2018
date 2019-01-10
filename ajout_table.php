@@ -67,7 +67,7 @@ Modification des tables
                     //echo "fin du while";
                     //echo "je suis dans la table Clients";
                     }
-                }if($db=="Livres"){
+                    }if($db=="Livres"){
                         $ajout1=$dbh->exec("CREATE TABLE IF NOT EXISTS `Livres`.`Auteur` (`id_auteur` INT(1) NOT NULL,`nom_auteur` varchar(20) DEFAULT NULL,`pre_nom_auteur` varchar(20) DEFAULT NULL,`Naissance` DATE DEFAULT NULL,`Mort` DATE DEFAULT NULL,`Nationalite` VARCHAR(20)) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
                         //$ajout12=$dbh->exec("ALTER TABLE `Auteur` ADD PRIMARY KEY(`id_auteur`);");
                     
@@ -161,14 +161,7 @@ Modification des tables
                     $value.=" "." '$getData[$j]'"." ".",";
                     //echo "$value";
                     //$ajout_table=$dbh->exec($sql);
-                    //$result = $dbh->query($sql);
-                //	if(!isset($result))
-                //	{
-                //		echo "ici";
-                //	}
-                //	else {
-                //		echo "la";
-                //	}
+
                 }
                 $value.=" "."'$getData[$j]'"." "; //eviter avoir virgule à la fin
                 $sql = "INSERT INTO `$chosen_table`  VALUES ( $value )";
@@ -178,7 +171,7 @@ Modification des tables
             }
                 fclose($file);
         }
-        echo "j ai $path"; //je crois que normalement c'est le path
+        //echo "j ai $path"; //je crois que normalement c'est le path
     }
     
 ?>

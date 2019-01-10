@@ -98,9 +98,18 @@ Modification des tables
                 <option value="'.$table5.'">'.$table5.'</option>
                 <input type="submit" name="valider2" value="OK"/>
                 </select>';
-                ?>
+?>
+
                 <input type="hidden" name="db_name" value= <?php echo "$db";?> />
-            </form>
+		</form>
+		<form method="post" action="requetes_sql.php" enctype="multipart/form-data">
+               <input type="hidden" name="db_name" value= <?php echo "$db";?> />
+           	<p>
+
+		<input type="submit" value= "Effectuer des requêtes SQL" />
+		</p>
+		</form>
+
         <?php
             }
             if(isset($_POST['valider2'])){ //On crée le bouton pour trouver la table CSV à ajouter
@@ -144,7 +153,10 @@ Modification des tables
         catch (PDOException $e) {
             die("DB ERROR: ". $e->getMessage());
         }
-        if($_FILES["mon_fichier"]["size"] > 0)
+	if($_FILES["mon_fichier"]["size"] > 0)
+?>
+<?php
+
         {   $file = fopen($path, "r");
             $Name_col=fgetcsv($file, 10000, ",");
             $num=count($Name_col);
@@ -174,9 +186,6 @@ Modification des tables
     }
     
 ?>
-<p>
-<input type="button" value= "Effectuer des requêtes SQL" onClick="document.location.href='requetes_sql.php'"/>
-</p>
 
 <p>
 <input type="button" value= "Tout effacer et revenir au menu principal" onClick="document.location.href = document.referrer"> //ça ne marche pas chez moi

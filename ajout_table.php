@@ -44,12 +44,16 @@ Modification des tables
                 $table5="";
         
             }if($db=="Clients"){
-                $ajout1=$dbh->exec("CREATE TABLE IF NOT EXISTS `Clients`.`Client` (`AdresseMail` varchar(13) NOT NULL,`MotDePasse` varchar(4) DEFAULT NULL,`Nom` varchar(7) DEFAULT NULL,`Prenom` varchar(7) DEFAULT NULL,`Adresse` varchar(10) DEFAULT NULL) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
-                $ajout2=$dbh->exec("CREATE TABLE IF NOT EXISTS `Clients`.`Commandes` (`NumeroCommande` int(1) NOT NULL,`DateCommande` varchar(10) DEFAULT NULL,`ModePaiement` varchar(6) DEFAULT NULL,`DateExpedition` varchar(10) DEFAULT NULL,`AdresseMail` varchar(13) DEFAULT NULL) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
-                $ajout3=$dbh->exec("CREATE TABLE IF NOT EXISTS `Clients`.`Detail`( `NumeroCommande` int(1) NOT NULL,`Reference` int(1) NOT NULL,`Quantite` int(2) DEFAULT NULL) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
-                $ajout4=$dbh->exec("CREATE TABLE IF NOT EXISTS `Clients`.`Produit` (`Reference` int(1) NOT NULL,`Nom` varchar(16) DEFAULT NULL,`Categorie` varchar(7) DEFAULT NULL,`Marque` varchar(7) DEFAULT NULL,`PrixUnitaire` decimal(3,2) DEFAULT NULL) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
+                $ajout1=$dbh->exec("CREATE TABLE IF NOT EXISTS `Clients`.`Client` (`AdresseMail` varchar(13) PRIMARY KEY NOT NULL,`MotDePasse` varchar(8) DEFAULT NULL,`Nom` varchar(7) DEFAULT NULL,`Prenom` varchar(7) DEFAULT NULL,`Adresse` varchar(10) DEFAULT NULL) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
+
+                $ajout2=$dbh->exec("CREATE TABLE IF NOT EXISTS `Clients`.`Commandes` (`NumeroCommande` int(1) PRIMARY KEY NOT NULL,`DateCommande` varchar(10) DEFAULT NULL,`ModePaiement` varchar(6) DEFAULT NULL,`DateExpedition` varchar(10) DEFAULT NULL,`AdresseMail` varchar(13) DEFAULT NULL,FOREIGN KEY (AdresseMail) REFERENCES Client(AdresseMail)) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
+            
+                $ajout4=$dbh->exec("CREATE TABLE IF NOT EXISTS `Clients`.`Produit` (`Reference` int(1) PRIMARY KEY NOT NULL,`Nom` varchar(16) DEFAULT NULL,`Categorie` varchar(7) DEFAULT NULL,`Marque` varchar(7) DEFAULT NULL,`PrixUnitaire` decimal(3,2) DEFAULT NULL) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
+                
+                $ajout3=$dbh->exec("CREATE TABLE IF NOT EXISTS `Clients`.`Detail`( `NumeroCommande` int(1) NOT NULL,`Reference` int(1)NOT NULL,`Quantite` int(2) DEFAULT NULL, PRIMARY KEY (NumeroCommande,Reference), FOREIGN KEY (Reference) REFERENCES Produit(Reference), FOREIGN KEY (NumeroCommande) REFERENCES Commandes(NumeroCommande)) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
+
                 $table1="Client";
-                $table2="Commande";
+                $table2="Commandes";
                 $table3="Detail";
                 $table4="Produit";
                 $table5="";
@@ -119,11 +123,6 @@ Modification des tables
     if(isset($_POST['valider3'])){ // le fichier a été trouvé dans le finder        $path=$_FILES['mon_fichier']['tmp_name'];
         $path=$_FILES['mon_fichier']['tmp_name'];
         //echo"je suis dans le valider 3 avec $path";
-        $host="localhost";
-        $root="root";
-        $root_password="rootpass";
-        $user='newuser';
-        $pass='newpass';
         $db=rtrim($_POST['db_name'],"/"); // j'ai un caractère / qui s'est ajouté mystérieusement dans le nom de ma base et table avec le dernier POST ...
         $chosen_table=rtrim($_POST['tab'],"/");
         echo "je suis la table $chosen_table";

@@ -1,7 +1,30 @@
 <html>
-    <?php
+<?php
+if (!empty($_POST['envoyer'])){
+
+        $db=$_POST['db'];
+        $host="localhost";
+        $root="root";
+        $root_password="rootpass";
+        $user='newuser';
+        $pass='newpass';
+        try
+        {
+            $dbh = new PDO("mysql:host=localhost",'root','root');
+            $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $dbh->exec("use $db;");
+        }
+            catch (PDOException $e) {
+                    die("DB ERROR: ". $e->getMessage());
+            }
+
+	$sql = "DROP DATABASE IF EXISTS `$db`";
+	$dbh->exec($sql);
+}
+
         if(!(isset($_POST['valider']))){ //on vérifie que l'option n'a pas encore été
-            ?>
+		
+	?>
             <head>
             Menu
             </head>
@@ -43,6 +66,5 @@
     }
 	//l'option a été validé ...
 	//echo "$table1"
-
 ?>
 </html>

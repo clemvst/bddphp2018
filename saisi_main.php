@@ -56,6 +56,7 @@
         $sth = $dbh->prepare($sql);
         $sth->execute();
         $result = $sth->fetchAll();
+        $num=count($result);
         // Pour les données du tableau
         $sql2="SELECT * FROM $table";
         $sth2 = $dbh->prepare($sql2);
@@ -85,8 +86,8 @@
         <?php while($j2<$num2){ ?>
             <tr>
             <?php  $k=0; ?>
+            <form method ="post" action="saisi_main.php">
             <?php while($k<$num){ ?>
-                <form method ="post" action="saisi_main.php">
                 <input type="hidden" name="db_name" value=<?php echo "$db"?> >
                 <input type="hidden" name="tab" value=<?php echo "$table"?> >
                 <td>
@@ -110,5 +111,10 @@
         }
         ?>
         </table>
+        <form method="post" action="ajout_ligne.php">
+        <input type="submit" name="Ajouter" value="Ajouter">
+        <input type="hidden" name="db_name" value=<?php echo "$db"?> >
+        <input type="hidden" name="tab" value=<?php echo "$table"?> >
+        </form>
 
 </html>

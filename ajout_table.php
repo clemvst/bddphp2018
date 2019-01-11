@@ -130,7 +130,7 @@ Modification des tables
         <form method="post" action="saisi_main.php" enctype="multipart/form-data">
         <input type="hidden" name="tab" value=<?php echo "$chosen_table " ;?> />
         <input type="hidden" name="db_name" value= <?php echo "$db " ;?> />
-        <input type="submit" name="Valider" value="Saisi_Manuel"/>
+        <input type="submit" name="Valider" value="Saisie_Manuelle"/>
         </form>
     <?php
     }
@@ -180,7 +180,7 @@ Modification des tables
 
                 }
                 $value.=" "."'$getData[$j]'"." "; //eviter avoir virgule à la fin
-                $sql = "INSERT INTO `$chosen_table`  VALUES ( $value )";
+                $sql = "INSERT INTO  `$chosen_table`  VALUES ( $value )";
                 echo $sql;
                 $ajout_table=$dbh->exec($sql);
                 //$result = $dbh->query($sql);
@@ -189,11 +189,13 @@ Modification des tables
         }
         //echo "j ai $path"; //je crois que normalement c'est le path
     }
-    
 ?>
 
+
+<form method="post" action="index.php" enctype="multipart/form-data">
+<input type="hidden" name="db" value= <?php echo "$db " ;?> />
 <p>
-<input type="button" value= "Tout effacer et revenir au menu principal" onClick="document.location.href = document.referrer"> //ça ne marche pas chez moi
+<input type="submit" name="envoyer" value="Tout effacer et revenir au menu principal"/>
 </p>
 </form>
 </html>

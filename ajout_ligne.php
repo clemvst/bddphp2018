@@ -68,17 +68,26 @@
         catch (PDOException $e) {
             die("DB ERROR: ". $e->getMessage());
         }
-
-        while($n<$num){
+        $val="";
+        $max=$num-1;
+        while($n<$max){
             $new_val=$_POST[$n];
             print_r($new_val);
             $col1=$result[0][0];
             $col_name=$result[$n][0];
-            $sql_in="INSERT INTO `$table` ($col_name) VALUES ('$new_val')";
-            echo "$sql_in" ;
+            $val.=" "."'$new_val'". " ".",";
             $n++;
         }
+        $val.=" ". "'$_POST[$max]'"." ";
+        $sql_in="INSERT INTO `$table` VALUES ($val)";
+        #echo "$sql_in" ;
+        $sth = $dbh->prepare($sql_in);
+        $sth->execute();
     }
         ?>
-  
+  <form method="post" action = "saisi_main.php">
+    <input type="hidden" name="db_name" value=<?php echo "$db"?> >
+    <input type="hidden" name="tab" value=<?php echo "$table"?> >
+    <input type="submit" name="retour" value="Retour"/>
+    </form>
 

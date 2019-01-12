@@ -209,4 +209,12 @@ Modification des tables
 <input type="submit" name="envoyer" value="Tout effacer et revenir au menu principal"/>
 </p>
 </form>
+<form method="post" action="index.php" enctype="multipart/form-data">
+<input type="hidden" name="db" value= <?php echo "$db " ;?> />
+<p>
+<input type="submit" name="notdelete" value="Revenir au menu principal et continuer le remplissage"/>
+</p>
+</form>
+
+
 </html>

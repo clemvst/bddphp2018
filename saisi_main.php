@@ -91,7 +91,7 @@
                 <input type="hidden" name="db_name" value=<?php echo "$db"?> >
                 <input type="hidden" name="tab" value=<?php echo "$table"?> >
                 <td>
-                <?php echo"$j2"; ?>
+                <?php //echo"$j2"; ?>
                 <input type="text" name = <?php echo "$k" ?> value= <?php print_r($result2[$j2][$k]) ?> /> </td>
                 <?php
                 $k++;
@@ -115,6 +115,11 @@
         <input type="submit" name="Ajouter" value="Ajouter">
         <input type="hidden" name="db_name" value=<?php echo "$db"?> >
         <input type="hidden" name="tab" value=<?php echo "$table"?> >
+        </form>
+        </form>
+        <form method ="post" action="ajout_table.php" enctype="multipart/form-data">
+        <input type="hidden" name="choix" value= <?php echo "$db " ;?> />
+        <input type="submit" name="retour_simple" value="retour"/>
         </form>
 
 </html>

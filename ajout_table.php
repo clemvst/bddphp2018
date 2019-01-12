@@ -48,7 +48,7 @@ Modification des tables
 
                 $ajout2=$dbh->exec("CREATE TABLE IF NOT EXISTS `Clients`.`Commandes` (`NumeroCommande` int(1) PRIMARY KEY NOT NULL,`DateCommande` varchar(10) DEFAULT NULL,`ModePaiement` varchar(6) DEFAULT NULL,`DateExpedition` varchar(10) DEFAULT NULL,`AdresseMail` varchar(13) DEFAULT NULL,FOREIGN KEY (AdresseMail) REFERENCES Client(AdresseMail) ON UPDATE CASCADE ON DELETE CASCADE) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
             
-                $ajout4=$dbh->exec("CREATE TABLE IF NOT EXISTS `Clients`.`Produit` (`Reference` int(1) PRIMARY KEY NOT NULL,`Nom` varchar(16) DEFAULT NULL,`Categorie` varchar(7) DEFAULT NULL,`Marque` varchar(7) DEFAULT NULL,`PrixUnitaire` decimal(3,2) DEFAULT NULL) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
+                $ajout4=$dbh->exec("CREATE TABLE IF NOT EXISTS `Clients`.`Produit` (`Reference` int(1) PRIMARY KEY NOT NULL,`Nom` varchar(30) DEFAULT NULL,`Categorie` varchar(30) DEFAULT NULL,`Marque` varchar(7) DEFAULT NULL,`PrixUnitaire` decimal(3,2) DEFAULT NULL) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
                 
                 $ajout3=$dbh->exec("CREATE TABLE IF NOT EXISTS `Clients`.`Detail`( `NumeroCommande` int(1) NOT NULL,`Reference` int(1)NOT NULL,`Quantite` int(2) DEFAULT NULL, PRIMARY KEY (NumeroCommande,Reference), FOREIGN KEY (Reference) REFERENCES Produit(Reference) ON UPDATE CASCADE ON DELETE CASCADE, FOREIGN KEY (NumeroCommande) REFERENCES Commandes(NumeroCommande) ON UPDATE CASCADE ON DELETE CASCADE) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
 
@@ -132,6 +132,15 @@ Modification des tables
         <input type="hidden" name="db_name" value= <?php echo "$db " ;?> />
         <input type="submit" name="Valider" value="Saisie_Manuelle"/>
         </form>
+        <form method="post" action="ajout_ligne.php" enctype="multipart/form-data">
+        <input type="hidden" name="tab" value=<?php echo "$chosen_table " ;?> />
+        <input type="hidden" name="db_name" value= <?php echo "$db " ;?> />
+        <input type="submit" name="Valider" value="Ajout de ligne"/>
+        </form>
+        <form method ="post" action="ajout_table.php" enctype="multipart/form-data">
+        <input type="hidden" name="choix" value= <?php echo "$db " ;?> />
+        <input type="submit" name="retour_simple" value="retour"/>
+        </form>
     <?php
     }
     if(isset($_POST['valider3'])){ // le fichier a été trouvé dans le finder        $path=$_FILES['mon_fichier']['tmp_name'];
@@ -163,21 +172,24 @@ Modification des tables
 <?php
 
         {   $file = fopen($path, "r");
-            $Name_col=fgetcsv($file, 10000, ",");
-            $num=count($Name_col);
+           
             //echo "Titre $Name_col[1]";
             //print_r($Name_col);
             
             while (($getData = fgetcsv($file, 10000, ",")) !== FALSE)
             {
                 $value="";
+                $num=count($getData);//nombre max col
                 for($j=0;$j<$num-1;$j++){
                     //echo "$chosen_table";
                     //$col=ltrim(rtrim($Name_col[$j],")"),"(");
-                    $value.=" "." '$getData[$j]'"." ".",";
+                    if(gettype($getData[$j])=="integer" or gettype($getData[$j])=="double"){
+                        $value.=" "." $getData[$j]"." ".",";
+                    }else{
+                        $value.=" "." '$getData[$j]'"." ".",";
                     //echo "$value";
                     //$ajout_table=$dbh->exec($sql);
-
+                    }
                 }
                 $value.=" "."'$getData[$j]'"." "; //eviter avoir virgule à la fin
                 $sql = "INSERT INTO  `$chosen_table`  VALUES ( $value )";
@@ -190,7 +202,6 @@ Modification des tables
         //echo "j ai $path"; //je crois que normalement c'est le path
     }
 ?>
-
 
 <form method="post" action="index.php" enctype="multipart/form-data">
 <input type="hidden" name="db" value= <?php echo "$db " ;?> />

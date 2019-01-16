@@ -42,6 +42,9 @@
                     if($table=="Detail"){
                         $col2=$result[1][0];
                         $sql_up="UPDATE `$table` SET `$col_name`='$new_val' WHERE $col1='$val' AND $col2='$val2' ";
+                        $sth = $dbh->prepare($sql_up);
+                        $n++;
+                        $sth->execute();
                     }else{
                         $sql_up="UPDATE `$table` SET `$col_name`='$new_val' WHERE $col1='$val'";
                         echo "$sql_up";
@@ -50,6 +53,22 @@
                         $sth->execute();
                     }
                 }
+            }if(isset($_POST['del'])){
+                $val=$_POST['val']; //Array containig the new values of the line
+                $val2=$_POST['val2'];
+                 $col1=$result[0][0];
+                if($table=="Detail"){
+                    $col2=$result[1][0];
+                    $sql_del="DELETE FROM `$table` WHERE $col1='$val' AND $col2='$val2' ";
+                    echo "$sql_del";
+                    $sth = $dbh->prepare($sql_del);
+                    $sth->execute();
+                }else{
+                    $sql_del="DELETE FROM `$table` WHERE $col1='$val'";
+                    echo "$sql_del";
+                    $sth = $dbh->prepare($sql_del);
+                    $sth->execute();
+                    }
             }
     //Determinons le nom des colonnes en fonction de la table sélectionné
         $sql="SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = N'$table'";
@@ -101,6 +120,7 @@
             <?php $val=$result2[$j2][0]; ?> <!--il s agit de la valeur de la clé primaire de la valeur modifier-->
             <?php $val2=$result2[$j2][1]; ?><!--il s agit de la valeur de la clé primaire uniquement utile pour table Detail de la valeur modifier-->
             <input type="submit" name="Modif" value="OK">
+            <input type="submit" name= "del" value="supprimer"/>
             <input type="hidden" name="val" value=<?php echo "$val"; ?> >
             <input type="hidden" name="val2" value=<?php echo "$val2"; ?>>
             </td>

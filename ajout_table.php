@@ -46,7 +46,7 @@ Modification des tables
             }if($db=="Clients"){
                 $ajout1=$dbh->exec("CREATE TABLE IF NOT EXISTS `Clients`.`Client` (`AdresseMail` varchar(13) PRIMARY KEY NOT NULL,`MotDePasse` varchar(8) DEFAULT NULL,`Nom` varchar(7) DEFAULT NULL,`Prenom` varchar(7) DEFAULT NULL,`Adresse` varchar(10) DEFAULT NULL) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
 
-                $ajout2=$dbh->exec("CREATE TABLE IF NOT EXISTS `Clients`.`Commandes` (`NumeroCommande` int(1) PRIMARY KEY NOT NULL,`DateCommande` varchar(10) DEFAULT NULL,`ModePaiement` varchar(6) DEFAULT NULL,`DateExpedition` varchar(10) DEFAULT NULL,`AdresseMail` varchar(13) DEFAULT NULL,FOREIGN KEY (AdresseMail) REFERENCES Client(AdresseMail) ON UPDATE CASCADE ON DELETE CASCADE) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
+                $ajout2=$dbh->exec("CREATE TABLE IF NOT EXISTS `Clients`.`Commandes` (`NumeroCommande` int(1) PRIMARY KEY NOT NULL,`DateCommande` varchar(10) DEFAULT NULL,`ModePaiement` varchar(200) DEFAULT NULL,`DateExpedition` varchar(10) DEFAULT NULL,`AdresseMail` varchar(13) DEFAULT NULL,FOREIGN KEY (AdresseMail) REFERENCES Client(AdresseMail) ON UPDATE CASCADE ON DELETE CASCADE) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
             
                 $ajout4=$dbh->exec("CREATE TABLE IF NOT EXISTS `Clients`.`Produit` (`Reference` int(1) PRIMARY KEY NOT NULL,`Nom` varchar(30) DEFAULT NULL,`Categorie` varchar(30) DEFAULT NULL,`Marque` varchar(7) DEFAULT NULL,`PrixUnitaire` decimal(3,2) DEFAULT NULL) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
                 
@@ -106,7 +106,7 @@ Modification des tables
                <input type="hidden" name="db_name" value= <?php echo "$db";?> />
            	<p>
 
-		<input type="submit" value= "Effectuer des requêtes SQL" />
+		<input type="submit" name="sqlrequete" value= "Effectuer des requêtes SQL" />
 		</p>
 		</form>
 
@@ -209,4 +209,12 @@ Modification des tables
 <input type="submit" name="envoyer" value="Tout effacer et revenir au menu principal"/>
 </p>
 </form>
+<form method="post" action="index.php" enctype="multipart/form-data">
+<input type="hidden" name="db" value= <?php echo "$db " ;?> />
+<p>
+<input type="submit" name="notdelete" value="Revenir au menu principal et continuer le remplissage"/>
+</p>
+</form>
+
+
 </html>

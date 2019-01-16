@@ -38,7 +38,6 @@ if (!empty($_POST['envoyer'])){
             <option value="Clients">Clients</option>
             <input type="submit" name="valider" value="OK"/>
 	    </select>
-		<input type="button" value= "Tout effacer et revenir au menu principal" onClick="document.location.href = 'index.php'">
 	    </form>
         </head>
 

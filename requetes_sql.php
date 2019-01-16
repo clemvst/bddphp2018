@@ -22,11 +22,11 @@ echo"Nom de la table actuellement utilisée :  $db"; ?>
 	$r8=
 	$r9=
 	$r10=
-	$r11=
-	$r12=
-	$r13=
-	$r14=
-	$r15=
+	$r12='SELECT SUM(P.PrixUnitaire*D.Quantite) FROM Produit P JOIN Detail D ON D.Reference=P.Reference WHERE D.NumeroCommande=3'
+	$r11='SELECT P.Nom, P.Reference,D.Quantite,P.PrixUnitaire FROM Produit P JOIN Detail D ON P.Reference=D.Reference WHERE D.NumeroCommande=3'
+	$r13='SELECT C2.NumeroCommande, C1.Nom, C1.Prenom, SUM(P.PrixUnitaire * D.Quantite), C2.ModePaiement FROM Client C1 INNER JOIN Commandes C2 ON C1.AdresseMail = C2.AdresseMail INNER JOIN Detail D ON C2.NumeroCommande = D.NumeroCommande INNER JOIN Produit P ON D.Reference = P.Reference GROUP BY C2.NumeroCommande'
+	$r14='SELECT COUNT(TableRep.NumeroCommande),TableRep.Nom, TableRep.Prenom, SUM(TableRep.Total) FROM (SELECT C2.NumeroCommande, C1.Nom, C1.Prenom,C1.AdresseMail, SUM(P.PrixUnitaire * D.Quantite) AS Total, C2.ModePaiement FROM Client C1 INNER JOIN Commandes C2 ON C1.AdresseMail = C2.AdresseMail INNER JOIN Detail D ON C2.NumeroCommande = D.NumeroCommande INNER JOIN Produit P ON D.Reference = P.Reference GROUP BY C2.NumeroCommande) TableRep GROUP BY TableRep.AdresseMail'
+	$r15='SELECT TableRep2.Nom, TableRep2.Prenom FROM (SELECT COUNT(TableRep.NumeroCommande),SUM(TableRep.Total) AS tot ,TableRep.Nom, TableRep.Prenom  FROM (SELECT C2.NumeroCommande, C1.Nom, C1.Prenom,C1.AdresseMail, SUM(P.PrixUnitaire * D.Quantite) AS Total, C2.ModePaiement FROM Client C1 INNER JOIN Commandes C2 ON C1.AdresseMail = C2.AdresseMail INNER JOIN Detail D ON C2.NumeroCommande = D.NumeroCommande INNER JOIN Produit P ON D.Reference = P.Reference GROUP BY C2.NumeroCommande) TableRep GROUP BY TableRep.AdresseMail) TableRep2 WHERE TableRep2.tot=(SELECT MAX(TableRep2.tot) FROM (SELECT COUNT(TableRep.NumeroCommande),SUM(TableRep.Total) AS tot ,TableRep.Nom, TableRep.Prenom  FROM (SELECT C2.NumeroCommande, C1.Nom, C1.Prenom,C1.AdresseMail, SUM(P.PrixUnitaire * D.Quantite) AS Total, C2.ModePaiement FROM Client C1 INNER JOIN Commandes C2 ON C1.AdresseMail = C2.AdresseMail INNER JOIN Detail D ON C2.NumeroCommande = D.NumeroCommande INNER JOIN Produit P ON D.Reference = P.Reference GROUP BY C2.NumeroCommande) TableRep GROUP BY TableRep.AdresseMail) TableRep2)'
 	echo "Quelle requête souhaitez-vous effectuer sur $db ?";
 	echo '<select name="requete">
         <option value="'.$r1.'">'.$r1.'</option>

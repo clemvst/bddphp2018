@@ -80,7 +80,7 @@
         }
         $val.=" ". "'$_POST[$max]'"." ";
         $sql_in="INSERT INTO `$table` VALUES ($val)";
-        #echo "$sql_in" ;
+        
         $sth = $dbh->prepare($sql_in);
         $sth->execute();
     }

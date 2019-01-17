@@ -1,6 +1,6 @@
 <html>
 <?php
-if (!empty($_POST['envoyer'])){
+if (!empty($_POST['envoyer'])){ // lorsque l'utilisateur a demandé a supprimer tout
 
         $db=$_POST['db'];
         $host="localhost";
@@ -30,7 +30,10 @@ if (!empty($_POST['envoyer'])){
             </head>
             <!-- Notre formulaire :-->
             <form method ="post" action="ajout_table.php">
-            <p> Creation de la Base de données de votre choix
+	    <p> Création de la Base de données de votre choix
+            </p> 
+	    <p>
+	    (livres et élèves ne sont pas terminées)
             </p>
             <select name="choix">
             <option value="Livres">Livres</option>
@@ -58,12 +61,9 @@ if (!empty($_POST['envoyer'])){
         <option value="Clients">Clients</option>
         <input type="submit" name="valider" value="OK"/>
         </select>
-        <input type="button" value= "Tout effacer et revenir au menu principal" onClick="document.location.href = document.referrer">
         </form>
         </head>
         <?php
     }
-	//l'option a été validé ...
-	//echo "$table1"
 ?>
 </html>

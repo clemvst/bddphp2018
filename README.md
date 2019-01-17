@@ -1,17 +1,35 @@
 # bddphp2018
 Project of a dynamic website in PHP/HTML
 
-Le fichier Traitement.php ne me sert plus à rien
+
+Authors : Iris Dumeur et Clémence Vast
+DEPOT GIT DISPONIBLE : github/clemvst/bddphp2018
 
 ## Index.php
-Il contient le menu prncipale avec un formulaire. Il faut penser à améliorer l'affichage
-Et traite en partie ce formulaire : cas de création de la BDD.
-Ensuite il y a un menu déroulant qui permet d'indiquer quel table csv on souhaite ajouter. Ce menu déroulant change en fonction de la base que l'on a crée au bouton d'avant.
-Une fois que l'on choisit la table on peut ensuite sélectionné le fichier csv que l'on compte utiliser. 
-Et enfin on obtient le chemin du fichier.J'ai utilise ce tuto : https://openclassrooms.com/fr/courses/1085676-upload-de-fichiers-par-formulaire
+Contient le menu principal avec un formulaire. On choisit la BDD à importer parmi Clients, Eleves, Livres.
+Donne également la possibilité d'effacer une base de données existante.
+Lors de la soumission du formulaire, renvoie vers ajout_table.php 
 
-## Ce qu'il reste à faire
-Il faut ensuite ouvrir le fichier et rentrer les données du fichier csv dans mysql
-Il faut faire un bouton qui supprime toutes les bases crée 
-Penser à l'organisation de notre menu : faire qu'il soit compréhensible ! 
+## Ajout_table.php
+Permet la création de la BDD. On peut ajouter les différentes tables en sélectionnant les fichiers CSV correspondants.
+Connection à MYSQL (compatible sur linux et mac) pour la création et la modification de la base.
+Boutons de retour disponibles.
+Renvoie aux fichiers : 
+saisi_main.php
+requetes_sql.php
+ajout_ligne.php
+index.php
+
+## Saisi_main.php
+Permet de saisir de nouvelles données à la main. ou de les modifier.
+Boutons de retour disponibles.
+
+## Ajout_ligne.php
+Permet d'ajouter de nouvelles données et d'update la table.
+Boutons de retour disponibles.
+
+## Requetes_sql.php
+Est constitué des différentes requetes SQL imposées par le sujet du Projet. Les requetes et leurs resultats bruts sont affichés.
+Boutons de retour disponibles.
+
 

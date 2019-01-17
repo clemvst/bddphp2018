@@ -29,7 +29,7 @@
             $sth->execute();
             $result = $sth->fetchAll();
             $num=count($result);
-        //Testons si la table a été modifié :
+        //Testons si la table a été modifiée :
             if(isset($_POST['Modif'])){
             //On doit faire des updates
                 $n=0;
@@ -85,14 +85,8 @@
         //Initialisation compteurs des whiles
         $j=0;
         $j2=0;
-       
-        //print_r($result2[1][1]);
-        //echo "$num2";
         ?>
         <table>
-        <?php //print_r($result[1][0]);
-    //$sql2=""; ?>
-
         <tr> <!--Ligne des titres -->
         <?php
         while($j<$num){
@@ -132,11 +126,25 @@
         ?>
         </table>
         <form method="post" action="ajout_ligne.php">
-        <input type="submit" name="Ajouter" value="Ajouter">
-        <input type="hidden" name="db_name" value=<?php echo "$db"?> >
-        <input type="hidden" name="tab" value=<?php echo "$table"?> >
+        <input type="submit" name="Ajouter" value="Ajouter"/>
+        <input type="hidden" name="db_name" value=<?php echo "$db"?> />
+        <input type="hidden" name="tab" value=<?php echo "$table"?> />
         </form>
+	</form>
+
+        <form method="post" action="saisi_main.php" enctype="multipart/form-data">
+        <input type="hidden" name="tab" value=<?php echo "$table " ;?> />
+        <input type="hidden" name="db_name" value= <?php echo "$db " ;?> />
+        <input type="submit" name="Valider" value="Saisie_Manuelle"/>
         </form>
+	<form method="post" action="requetes_sql.php" enctype="multipart/form-data">
+	<input type="hidden" name="db_name" value= <?php echo "$db";?> />
+        <input type="hidden" name="tab" value=<?php echo "$table"?> />
+        <p>
+	<input type="submit" name="sqlrequete" value= "Effectuer des requêtes SQL" />
+	</p>
+	</form>
+
         <form method ="post" action="ajout_table.php" enctype="multipart/form-data">
         <input type="hidden" name="choix" value= <?php echo "$db " ;?> />
         <input type="submit" name="retour_simple" value="retour"/>
